@@ -1,26 +1,30 @@
-import type * as es5 from "@miyauci/estree/es5";
+import type { Expression, Node } from "@miyauci/estree/es5";
+import type { TemplateElementValueCookedMap } from "./internal.ts";
 
-declare module "@miyauci/estree/es5" {
+declare module "@miyauci/estree/es5/internal" {
   interface ExpressionMap {
     TemplateLiteral: TemplateLiteral;
     TaggedTemplateExpression: TaggedTemplateExpression;
   }
 }
 
-export interface TemplateLiteral extends es5.Node {
+export interface TemplateLiteral extends Node {
   type: "TemplateLiteral";
   quasis: TemplateElement[];
-  expressions: es5.Expression[];
+  expressions: Expression[];
 }
 
-export interface TaggedTemplateExpression extends es5.Node {
+export interface TaggedTemplateExpression extends Node {
   type: "TaggedTemplateExpression";
-  tag: es5.Expression;
+  tag: Expression;
   quasi: TemplateLiteral;
 }
 
-export interface TemplateElement extends es5.Node {
+export interface TemplateElement extends Node {
   type: "TemplateElement";
   tail: boolean;
-  value: { cooked: string; raw: string };
+  value: {
+    cooked: TemplateElementValueCookedMap[keyof TemplateElementValueCookedMap];
+    raw: string;
+  };
 }

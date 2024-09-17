@@ -7,7 +7,7 @@ declare module "@miyauci/estree/es2021" {
   }
 }
 
-declare module "@miyauci/estree/es2021" {
+declare module "@miyauci/estree/es5/internal" {
   interface BinaryExpressionLeft {
     PrivateIdentifier: PrivateIdentifier;
   }

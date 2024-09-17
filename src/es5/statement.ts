@@ -2,6 +2,7 @@ import type { Node } from "./node_object.ts";
 import type { Expression, Identifier, Literal } from "./expression.ts";
 import type { VariableDeclaration } from "./declaration.ts";
 import type { Pattern } from "./pattern.ts";
+import type { CatchClauseParamMap, StatementMap } from "./internal.ts";
 
 /**
  * Any statement.
@@ -9,28 +10,6 @@ import type { Pattern } from "./pattern.ts";
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#statements)
  */
 export type Statement = StatementMap[keyof StatementMap];
-
-export interface StatementMap {
-  ExpressionStatement: ExpressionStatement;
-  Directive: Directive;
-  BlockStatement: BlockStatement;
-  FunctionBody: FunctionBody;
-  EmptyStatement: EmptyStatement;
-  DebuggerStatement: DebuggerStatement;
-  ReturnStatement: ReturnStatement;
-  LabeledStatement: LabeledStatement;
-  BreakStatement: BreakStatement;
-  ContinueStatement: ContinueStatement;
-  IfStatement: IfStatement;
-  SwitchStatement: SwitchStatement;
-  TryStatement: TryStatement;
-  ThrowStatement: ThrowStatement;
-  WhileStatement: WhileStatement;
-  WithStatement: WithStatement;
-  DoWhileStatement: DoWhileStatement;
-  ForInStatement: ForInStatement;
-  ForStatement: ForStatement;
-}
 
 /**
  * An expression statement, i.e., a statement consisting of a single expression.
@@ -205,7 +184,7 @@ export interface TryStatement extends Node {
  */
 export interface CatchClause extends Node {
   type: "CatchClause";
-  param: Pattern;
+  param: CatchClauseParamMap[keyof CatchClauseParamMap];
   body: BlockStatement;
 }
 

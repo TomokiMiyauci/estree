@@ -1,4 +1,4 @@
-declare module "@miyauci/estree/2015" {
+declare module "@miyauci/estree/es5/internal" {
   interface BinaryOperatorMap {
     StarStar: "**";
   }
@@ -8,4 +8,4 @@ declare module "@miyauci/estree/2015" {
   }
 }
 
-export type * from "@miyauci/estree/2015";
+export type * from "@miyauci/estree/es2015";

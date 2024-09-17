@@ -1,15 +1,41 @@
-import type * as es5 from "@miyauci/estree/es5";
+import type {
+  Expression,
+  Function,
+  FunctionBody,
+  Node,
+} from "@miyauci/estree/es5";
 
-export interface Super extends es5.Node {
+export interface Super extends Node {
   type: "Super";
 }
 
 declare module "@miyauci/estree/es5" {
   interface CallExpression {
-    callee: es5.Expression | Super;
-    arguments: (es5.Expression | SpreadElement)[];
+    callee: Expression | Super;
+    arguments: Array<Expression | SpreadElement>;
   }
 
+  interface MemberExpression {
+    object: Expression | Super;
+  }
+
+  interface ArrayExpression {
+    elements: Array<Expression | SpreadElement | null>;
+  }
+
+  interface NewExpression {
+    arguments: Array<Expression | SpreadElement>;
+  }
+
+  interface Property {
+    key: Expression;
+    method: boolean;
+    shorthand: boolean;
+    computed: boolean;
+  }
+}
+
+declare module "@miyauci/estree/es5/internal" {
   interface CallExpressionCalleeMap {
     Super: Super;
   }
@@ -18,31 +44,19 @@ declare module "@miyauci/estree/es5" {
     SpreadElement: SpreadElement;
   }
 
-  interface MemberExpression {
-    object: es5.Expression | Super;
-  }
-
   interface MemberExpressionObjectMap {
     Super: Super;
   }
 }
 
-export interface SpreadElement extends es5.Node {
+export interface SpreadElement extends Node {
   type: "SpreadElement";
-  argument: es5.Expression;
+  argument: Expression;
 }
 
-declare module "@miyauci/estree/es5" {
-  interface ArrayExpression {
-    elements: Array<es5.Expression | SpreadElement | null>;
-  }
-
+declare module "@miyauci/estree/es5/internal" {
   interface ArrayExpressionElementsMap {
     SpreadElement: SpreadElement;
-  }
-
-  interface NewExpression {
-    arguments: Array<es5.Expression | SpreadElement>;
   }
 
   interface NewExpressionArgumentsMap {
@@ -52,15 +66,8 @@ declare module "@miyauci/estree/es5" {
   // interface AssignmentExpression {
   // }
 
-  interface Property {
-    key: es5.Expression;
-    method: boolean;
-    shorthand: boolean;
-    computed: boolean;
-  }
-
   interface PropertyKeyMap {
-    Expression: es5.Expression;
+    Expression: Expression;
   }
 
   interface ExpressionMap {
@@ -69,15 +76,15 @@ declare module "@miyauci/estree/es5" {
   }
 }
 
-export interface ArrowFunctionExpression extends Omit<es5.Function, "body"> {
+export interface ArrowFunctionExpression extends Omit<Function, "body"> {
   type: "ArrowFunctionExpression";
-  body: es5.FunctionBody | es5.Expression;
+  body: FunctionBody | Expression;
   expression: boolean;
   generator: false;
 }
 
-export interface YieldExpression extends es5.Node {
+export interface YieldExpression extends Node {
   type: "YieldExpression";
-  argument: es5.Expression | null;
+  argument: Expression | null;
   delegate: boolean;
 }

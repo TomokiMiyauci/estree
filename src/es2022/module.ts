@@ -15,7 +15,7 @@ declare module "@miyauci/estree/es2021" {
   }
 }
 
-declare module "@miyauci/estree/es2021" {
+declare module "@miyauci/estree/es2015/internal" {
   interface ImportSpecifierImportedMap {
     Literal: Literal;
   }
@@ -24,6 +24,12 @@ declare module "@miyauci/estree/es2021" {
     Literal: Literal;
   }
 
+  interface ModuleSpecifierLocalMap {
+    Literal: Literal;
+  }
+}
+
+declare module "@miyauci/estree/es2020/internal" {
   interface ExportAllDeclarationExportedMap {
     Literal: Literal;
   }

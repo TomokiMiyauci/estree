@@ -14,7 +14,7 @@ declare module "@miyauci/estree/es2021" {
   }
 }
 
-declare module "@miyauci/estree/es2021" {
+declare module "@miyauci/estree/es2015/internal" {
   interface ClassBodyBodyMap {
     MPropertyDefinition: PropertyDefinition;
     StaticBlock: StaticBlock;
@@ -23,7 +23,9 @@ declare module "@miyauci/estree/es2021" {
   interface MethodDefinitionKeyMap {
     PrivateIdentifier: PrivateIdentifier;
   }
+}
 
+declare module "@miyauci/estree/es5/internal" {
   interface MemberExpressionPropertyMap {
     PrivateIdentifier: PrivateIdentifier;
   }

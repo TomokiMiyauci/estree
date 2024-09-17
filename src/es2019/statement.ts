@@ -6,7 +6,7 @@ declare module "@miyauci/estree/es2018" {
   }
 }
 
-declare module "@miyauci/estree/es2018" {
+declare module "@miyauci/estree/es5/internal" {
   interface CatchClauseParamMap {
     null: null;
   }

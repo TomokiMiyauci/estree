@@ -7,11 +7,7 @@ declare module "@miyauci/estree/es2019" {
   }
 }
 
-declare module "@miyauci/estree/es2019" {
-  interface LiteralMap {
-    BigIntLiteral: BigIntLiteral;
-  }
-
+declare module "@miyauci/estree/es5/internal" {
   interface LiteralValueMap {
     bigint: bigint;
   }

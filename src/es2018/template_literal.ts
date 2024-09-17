@@ -6,7 +6,7 @@ declare module "@miyauci/estree/es2017" {
   }
 }
 
-declare module "@miyauci/estree/es2017" {
+declare module "@miyauci/estree/es2015/internal" {
   interface TemplateElementValueCookedMap {
     null: null;
   }

@@ -1,32 +1,38 @@
-import type * as es5 from "@miyauci/estree/es5";
+import type {
+  Declaration,
+  Expression,
+  Function,
+  FunctionDeclaration,
+  Literal,
+  Node,
+} from "@miyauci/estree/es5";
 import type { Class, ClassDeclaration } from "./class.ts";
-
-export interface ImportOrExportDeclarationMap {
-  ImportDeclaration: ImportDeclaration;
-  ExportNamedDeclaration: ExportNamedDeclaration;
-  ExportDefaultDeclaration: ExportDefaultDeclaration;
-  ExportAllDeclaration: ExportAllDeclaration;
-}
+import type {
+  ExportSpecifierExportedMap,
+  ImportOrExportDeclarationMap,
+  ImportSpecifierImportedMap,
+  ModuleSpecifierLocalMap,
+} from "./internal.ts";
 
 /** */
 export type ImportOrExportDeclaration =
   ImportOrExportDeclarationMap[keyof ImportOrExportDeclarationMap];
 
-export interface ModuleSpecifier extends es5.Node {
-  local: es5.Identifier;
+export interface ModuleSpecifier extends Node {
+  local: ModuleSpecifierLocalMap[keyof ModuleSpecifierLocalMap];
 }
 
-export interface ImportDeclaration extends es5.Node {
+export interface ImportDeclaration extends Node {
   type: "ImportDeclaration";
   specifiers: Array<
     ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier
   >;
-  source: es5.Literal;
+  source: Literal;
 }
 
 export interface ImportSpecifier extends ModuleSpecifier {
   type: "ImportSpecifier";
-  imported: es5.Identifier;
+  imported: ImportSpecifierImportedMap[keyof ImportSpecifierImportedMap];
 }
 
 export interface ImportDefaultSpecifier extends ModuleSpecifier {
@@ -37,20 +43,19 @@ export interface ImportNamespaceSpecifier extends ModuleSpecifier {
   type: "ImportNamespaceSpecifier";
 }
 
-export interface ExportNamedDeclaration extends es5.Node {
+export interface ExportNamedDeclaration extends Node {
   type: "ExportNamedDeclaration";
-  declaration: es5.Declaration | null;
+  declaration: Declaration | null;
   specifiers: Array<ExportSpecifier>;
-  source: es5.Literal | null;
+  source: Literal | null;
 }
 
 export interface ExportSpecifier extends ModuleSpecifier {
   type: "ExportSpecifier";
-  exported: es5.Identifier;
+  exported: ExportSpecifierExportedMap[keyof ExportSpecifierExportedMap];
 }
 
-export interface AnonymousDefaultExportedFunctionDeclaration
-  extends es5.Function {
+export interface AnonymousDefaultExportedFunctionDeclaration extends Function {
   type: "FunctionDeclaration";
   id: null;
 }
@@ -60,17 +65,17 @@ export interface AnonymousDefaultExportedClassDeclaration extends Class {
   id: null;
 }
 
-export interface ExportDefaultDeclaration extends es5.Node {
+export interface ExportDefaultDeclaration extends Node {
   type: "ExportDefaultDeclaration";
   declaration:
     | AnonymousDefaultExportedFunctionDeclaration
-    | es5.FunctionDeclaration
+    | FunctionDeclaration
     | AnonymousDefaultExportedClassDeclaration
     | ClassDeclaration
-    | es5.Expression;
+    | Expression;
 }
 
-export interface ExportAllDeclaration extends es5.Node {
+export interface ExportAllDeclaration extends Node {
   type: "ExportAllDeclaration";
-  source: es5.Literal;
+  source: Literal;
 }

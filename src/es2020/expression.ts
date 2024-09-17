@@ -18,15 +18,15 @@ declare module "@miyauci/estree/es2019" {
   interface CallExpression extends ChainElement {}
 
   interface MemberExpression extends ChainElement {}
-
-  interface LogicalOperatorMap {
-    NullishCoalescing: "??";
-  }
 }
 
-declare module "@miyauci/estree/es2019" {
+declare module "@miyauci/estree/es5/internal" {
   interface ExpressionMap {
     ChainExpression: ChainExpression;
     ImportExpression: ImportExpression;
+  }
+
+  interface LogicalOperatorMap {
+    NullishCoalescing: "??";
   }
 }

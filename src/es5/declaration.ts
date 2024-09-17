@@ -3,6 +3,7 @@ import type { Statement } from "./statement.ts";
 import type { Expression, Identifier } from "./expression.ts";
 import type { Pattern } from "./pattern.ts";
 import type { Function } from "./function.ts";
+import type { VariableKindMap } from "./internal.ts";
 
 /**
  * Any declaration node.
@@ -35,7 +36,7 @@ export interface FunctionDeclaration extends Function {
 export interface VariableDeclaration extends Node {
   type: "VariableDeclaration";
   declarations: VariableDeclarator[];
-  kind: "var";
+  kind: VariableKindMap[keyof VariableKindMap];
 }
 
 /**

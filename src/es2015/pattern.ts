@@ -1,6 +1,7 @@
-import type * as es5 from "@miyauci/estree/es5";
+import type { Expression, Node, Pattern, Property } from "@miyauci/estree/es5";
+import type { ObjectPatternPropertiesMap } from "./internal.ts";
 
-declare module "@miyauci/estree/es5" {
+declare module "@miyauci/estree/es5/internal" {
   interface PatternMap {
     ObjectPattern: ObjectPattern;
     ArrayPattern: ArrayPattern;
@@ -9,29 +10,31 @@ declare module "@miyauci/estree/es5" {
   }
 }
 
-export interface AssignmentProperty extends Omit<es5.Property, "value"> {
-  value: es5.Pattern;
+export interface AssignmentProperty extends Omit<Property, "value"> {
+  value: Pattern;
   kind: "init";
   method: false;
 }
 
-export interface ObjectPattern extends es5.Node {
+export interface ObjectPattern extends Node {
   type: "ObjectPattern";
-  properties: AssignmentProperty[];
+  properties: Array<
+    ObjectPatternPropertiesMap[keyof ObjectPatternPropertiesMap]
+  >;
 }
 
-export interface ArrayPattern extends es5.Node {
+export interface ArrayPattern extends Node {
   type: "ArrayPattern";
-  elements: (es5.Pattern | null)[];
+  elements: Array<Pattern | null>;
 }
 
-export interface RestElement extends es5.Node {
+export interface RestElement extends Node {
   type: "RestElement";
-  argument: es5.Pattern;
+  argument: Pattern;
 }
 
-export interface AssignmentPattern extends es5.Node {
+export interface AssignmentPattern extends Node {
   type: "AssignmentPattern";
-  left: es5.Pattern;
-  right: es5.Expression;
+  left: Pattern;
+  right: Expression;
 }

@@ -1,5 +1,5 @@
-import type * as es5 from "@miyauci/estree/es5";
+import type { ForInStatement } from "@miyauci/estree/es5";
 
-export interface ForOfStatement extends Omit<es5.ForInStatement, "type"> {
+export interface ForOfStatement extends Omit<ForInStatement, "type"> {
   type: "ForOfStatement";
 }

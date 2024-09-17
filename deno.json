@@ -10,6 +10,9 @@
     "@miyauci/estree/es2015": "./src/es2015/mod.ts",
     "@miyauci/estree/es2016": "./src/es2016/mod.ts",
     "@miyauci/estree/es5": "./src/es5/mod.ts",
+    "@miyauci/estree/es5/internal": "./src/es5/internal.ts",
+    "@miyauci/estree/es2015/internal": "./src/es2015/internal.ts",
+    "@miyauci/estree/es2020/internal": "./src/es2020/internal.ts",
     "@miyauci/infra": "jsr:@miyauci/infra@^1.0.0"
   },
   "exports": {

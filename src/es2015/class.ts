@@ -1,20 +1,26 @@
-import type * as es5 from "@miyauci/estree/es5";
+import type {
+  Expression,
+  FunctionExpression,
+  Identifier,
+  Node,
+} from "@miyauci/estree/es5";
+import type { ClassBodyBodyMap, MethodDefinitionKeyMap } from "./internal.ts";
 
-export interface Class extends es5.Node {
-  id: es5.Identifier | null;
-  superClass: es5.Expression | null;
+export interface Class extends Node {
+  id: Identifier | null;
+  superClass: Expression | null;
   body: ClassBody;
 }
 
-export interface ClassBody extends es5.Node {
+export interface ClassBody extends Node {
   type: "ClassBody";
-  body: MethodDefinition[];
+  body: Array<ClassBodyBodyMap[keyof ClassBodyBodyMap]>;
 }
 
-export interface MethodDefinition extends es5.Node {
+export interface MethodDefinition extends Node {
   type: "MethodDefinition";
-  key: es5.Expression;
-  value: es5.FunctionExpression;
+  key: MethodDefinitionKeyMap[keyof MethodDefinitionKeyMap];
+  value: FunctionExpression;
   kind: "constructor" | "method" | "get" | "set";
   computed: boolean;
   static: boolean;
@@ -22,20 +28,20 @@ export interface MethodDefinition extends es5.Node {
 
 export interface ClassDeclaration extends Class {
   type: "ClassDeclaration";
-  id: es5.Identifier;
+  id: Identifier;
 }
 
 export interface ClassExpression extends Class {
   type: "ClassExpression";
 }
 
-export interface MetaProperty extends es5.Node {
+export interface MetaProperty extends Node {
   type: "MetaProperty";
-  meta: es5.Identifier;
-  property: es5.Identifier;
+  meta: Identifier;
+  property: Identifier;
 }
 
-declare module "@miyauci/estree/es5" {
+declare module "@miyauci/estree/es5/internal" {
   interface DeclarationMap {
     ClassDeclaration: ClassDeclaration;
   }

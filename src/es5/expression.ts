@@ -1,6 +1,22 @@
 import type { Node } from "./node_object.ts";
 import type { Pattern } from "./pattern.ts";
 import type { Function } from "./function.ts";
+import type {
+  ArrayExpressionElementsMap,
+  AssignmentOperatorMap,
+  BinaryExpressionLeft,
+  BinaryOperatorMap,
+  CallExpressionArgumentsMap,
+  CallExpressionCalleeMap,
+  ExpressionMap,
+  LiteralValueMap,
+  LogicalOperatorMap,
+  MemberExpressionObjectMap,
+  MemberExpressionPropertyMap,
+  NewExpressionArgumentsMap,
+  ObjectExpressionPropertiesMap,
+  PropertyKeyMap,
+} from "./internal.ts";
 
 /**
  * Any expression node. Since the left-hand side of an assignment may be any expression in general, an expression can also be a pattern.
@@ -8,26 +24,6 @@ import type { Function } from "./function.ts";
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#expressions)
  */
 export type Expression = ExpressionMap[keyof ExpressionMap];
-
-export interface ExpressionMap {
-  ThisExpression: ThisExpression;
-  ArrayExpression: ArrayExpression;
-  ObjectExpression: ObjectExpression;
-  FunctionExpression: FunctionExpression;
-  UnaryExpression: UnaryExpression;
-  UpdateExpression: UpdateExpression;
-  BinaryExpression: BinaryExpression;
-  AssignmentExpression: AssignmentExpression;
-  LogicalExpression: LogicalExpression;
-  MemberExpression: MemberExpression;
-  ConditionalExpression: ConditionalExpression;
-  CallExpression: CallExpression;
-  NewExpression: NewExpression;
-  SequenceExpression: SequenceExpression;
-  Literal: Literal;
-  RegExpLiteral: RegExpLiteral;
-  Identifier: Identifier;
-}
 
 /**
  * A `this` expression.
@@ -45,7 +41,7 @@ export interface ThisExpression extends Node {
  */
 export interface ArrayExpression extends Node {
   type: "ArrayExpression";
-  elements: (Expression | null)[];
+  elements: Array<ArrayExpressionElementsMap[keyof ArrayExpressionElementsMap]>;
 }
 
 /**
@@ -55,7 +51,9 @@ export interface ArrayExpression extends Node {
  */
 export interface ObjectExpression extends Node {
   type: "ObjectExpression";
-  properties: Property[];
+  properties: Array<
+    ObjectExpressionPropertiesMap[keyof ObjectExpressionPropertiesMap]
+  >;
 }
 
 /**
@@ -66,7 +64,7 @@ export interface ObjectExpression extends Node {
  */
 export interface Property extends Node {
   type: "Property";
-  key: Literal | Identifier;
+  key: PropertyKeyMap[keyof PropertyKeyMap];
   value: Expression;
   kind: "init" | "get" | "set";
 }
@@ -133,7 +131,7 @@ export type UpdateOperator = "++" | "--";
 export interface BinaryExpression extends Node {
   type: "BinaryExpression";
   operator: BinaryOperator;
-  left: Expression;
+  left: BinaryExpressionLeft[keyof BinaryExpressionLeft];
   right: Expression;
 }
 
@@ -142,28 +140,7 @@ export interface BinaryExpression extends Node {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#binaryoperator)
  */
-export type BinaryOperator =
-  | "=="
-  | "!="
-  | "==="
-  | "!=="
-  | "<"
-  | "<="
-  | ">"
-  | ">="
-  | "<<"
-  | ">>"
-  | ">>>"
-  | "+"
-  | "-"
-  | "*"
-  | "/"
-  | "%"
-  | "|"
-  | "^"
-  | "&"
-  | "in"
-  | "instanceof";
+export type BinaryOperator = BinaryOperatorMap[keyof BinaryOperatorMap];
 
 /**
  * An assignment operator expression.
@@ -183,18 +160,7 @@ export interface AssignmentExpression extends Node {
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#assignmentoperator)
  */
 export type AssignmentOperator =
-  | "="
-  | "+="
-  | "-="
-  | "*="
-  | "/="
-  | "%="
-  | "<<="
-  | ">>="
-  | ">>>="
-  | "|="
-  | "^="
-  | "&=";
+  AssignmentOperatorMap[keyof AssignmentOperatorMap];
 
 /**
  * A logical operator expression.
@@ -213,7 +179,7 @@ export interface LogicalExpression extends Node {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#logicaloperator)
  */
-export type LogicalOperator = "||" | "&&";
+export type LogicalOperator = LogicalOperatorMap[keyof LogicalOperatorMap];
 
 /**
  * A member expression. If {@link computed} is `true`, the node corresponds to a computed (`a[b]`) member expression and {@link property} is an {@link Expression}.
@@ -223,8 +189,8 @@ export type LogicalOperator = "||" | "&&";
  */
 export interface MemberExpression extends Node {
   type: "MemberExpression";
-  object: Expression;
-  property: Expression;
+  object: MemberExpressionObjectMap[keyof MemberExpressionObjectMap];
+  property: MemberExpressionPropertyMap[keyof MemberExpressionPropertyMap];
   computed: boolean;
 }
 
@@ -247,8 +213,10 @@ export interface ConditionalExpression extends Node {
  */
 export interface CallExpression extends Node {
   type: "CallExpression";
-  callee: Expression;
-  arguments: Expression[];
+  callee: CallExpressionCalleeMap[keyof CallExpressionCalleeMap];
+  arguments: Array<
+    CallExpressionArgumentsMap[keyof CallExpressionArgumentsMap]
+  >;
 }
 
 /**
@@ -259,7 +227,7 @@ export interface CallExpression extends Node {
 export interface NewExpression extends Node {
   type: "NewExpression";
   callee: Expression;
-  arguments: Expression[];
+  arguments: Array<NewExpressionArgumentsMap[keyof NewExpressionArgumentsMap]>;
 }
 
 /**
@@ -282,7 +250,7 @@ export interface SequenceExpression extends Node {
  */
 export interface Literal extends Node {
   type: "Literal";
-  value: string | boolean | null | number | RegExp;
+  value: LiteralValueMap[keyof LiteralValueMap];
 }
 
 /**
