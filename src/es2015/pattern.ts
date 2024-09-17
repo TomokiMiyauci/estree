@@ -1,3 +1,4 @@
+import "@miyauci/estree/es5/internal";
 import type { Expression, Node, Pattern, Property } from "@miyauci/estree/es5";
 import type { ObjectPatternPropertiesMap } from "./internal.ts";
 

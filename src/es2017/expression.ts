@@ -1,3 +1,4 @@
+import "@miyauci/estree/es2016/internal";
 import type { Expression, Node } from "@miyauci/estree/es2016";
 
 export interface AwaitExpression extends Node {
@@ -5,7 +6,7 @@ export interface AwaitExpression extends Node {
   argument: Expression;
 }
 
-declare module "@miyauci/estree/es5/internal" {
+declare module "@miyauci/estree/es2016/internal" {
   interface ExpressionMap {
     AwaitExpression: AwaitExpression;
   }

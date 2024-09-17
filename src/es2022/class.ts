@@ -1,3 +1,4 @@
+import "@miyauci/estree/es2021/internal";
 import type { BlockStatement, Expression, Node } from "@miyauci/estree/es2021";
 
 declare module "@miyauci/estree/es2021" {
@@ -14,7 +15,7 @@ declare module "@miyauci/estree/es2021" {
   }
 }
 
-declare module "@miyauci/estree/es2015/internal" {
+declare module "@miyauci/estree/es2021/internal" {
   interface ClassBodyBodyMap {
     MPropertyDefinition: PropertyDefinition;
     StaticBlock: StaticBlock;
@@ -25,7 +26,7 @@ declare module "@miyauci/estree/es2015/internal" {
   }
 }
 
-declare module "@miyauci/estree/es5/internal" {
+declare module "@miyauci/estree/es2021/internal" {
   interface MemberExpressionPropertyMap {
     PrivateIdentifier: PrivateIdentifier;
   }

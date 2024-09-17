@@ -42,3 +42,5 @@ export interface ClassBodyBodyMap {
 export interface MethodDefinitionKeyMap {
   Expression: Expression;
 }
+
+export type * from "@miyauci/estree/es5/internal";

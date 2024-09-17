@@ -1,3 +1,4 @@
+import "@miyauci/estree/es2019/internal";
 import type { Node } from "@miyauci/estree/es2019";
 
 declare module "@miyauci/estree/es2019" {
@@ -7,7 +8,7 @@ declare module "@miyauci/estree/es2019" {
   }
 }
 
-declare module "@miyauci/estree/es5/internal" {
+declare module "@miyauci/estree/es2019/internal" {
   interface LiteralValueMap {
     bigint: bigint;
   }

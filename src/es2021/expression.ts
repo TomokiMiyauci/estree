@@ -1,6 +1,6 @@
-import "@miyauci/estree/es5";
+import "@miyauci/estree/es2020/internal";
 
-declare module "@miyauci/estree/es5/internal" {
+declare module "@miyauci/estree/es2020/internal" {
   interface AssignmentOperatorMap {
     OrEq: "||=";
     AndEq: "&&=";

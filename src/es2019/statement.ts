@@ -1,3 +1,4 @@
+import "@miyauci/estree/es2018/internal";
 import type { Pattern } from "@miyauci/estree/es2018";
 
 declare module "@miyauci/estree/es2018" {
@@ -6,7 +7,7 @@ declare module "@miyauci/estree/es2018" {
   }
 }
 
-declare module "@miyauci/estree/es5/internal" {
+declare module "@miyauci/estree/es2018/internal" {
   interface CatchClauseParamMap {
     null: null;
   }

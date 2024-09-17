@@ -1,3 +1,4 @@
+import "@miyauci/estree/es5/internal";
 import type { Statement } from "@miyauci/estree/es5";
 import type { ImportOrExportDeclaration } from "./module.ts";
 

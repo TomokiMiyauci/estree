@@ -1,3 +1,4 @@
+import "@miyauci/estree/es2021/internal";
 import type { Identifier, Literal } from "@miyauci/estree/es2021";
 
 declare module "@miyauci/estree/es2021" {
@@ -15,7 +16,7 @@ declare module "@miyauci/estree/es2021" {
   }
 }
 
-declare module "@miyauci/estree/es2015/internal" {
+declare module "@miyauci/estree/es2021/internal" {
   interface ImportSpecifierImportedMap {
     Literal: Literal;
   }
@@ -29,7 +30,7 @@ declare module "@miyauci/estree/es2015/internal" {
   }
 }
 
-declare module "@miyauci/estree/es2020/internal" {
+declare module "@miyauci/estree/es2021/internal" {
   interface ExportAllDeclarationExportedMap {
     Literal: Literal;
   }

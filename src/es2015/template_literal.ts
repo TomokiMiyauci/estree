@@ -1,3 +1,4 @@
+import "@miyauci/estree/es5/internal";
 import type { Expression, Node } from "@miyauci/estree/es5";
 import type { TemplateElementValueCookedMap } from "./internal.ts";
 

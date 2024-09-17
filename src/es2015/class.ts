@@ -1,3 +1,4 @@
+import "@miyauci/estree/es5/internal";
 import type {
   Expression,
   FunctionExpression,

@@ -1,3 +1,4 @@
+import "@miyauci/estree/es2017/internal";
 import type { Property, SpreadElement } from "@miyauci/estree/es2017";
 
 declare module "@miyauci/estree/es2017" {
@@ -6,7 +7,7 @@ declare module "@miyauci/estree/es2017" {
   }
 }
 
-declare module "@miyauci/estree/es5/internal" {
+declare module "@miyauci/estree/es2017/internal" {
   interface ObjectExpressionPropertiesMap {
     SpreadElement: SpreadElement;
   }

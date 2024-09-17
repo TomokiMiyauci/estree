@@ -1,3 +1,4 @@
+import "@miyauci/estree/es2019/internal";
 import type { Expression, Node } from "@miyauci/estree/es2019";
 
 export interface ChainExpression extends Node {
@@ -20,7 +21,7 @@ declare module "@miyauci/estree/es2019" {
   interface MemberExpression extends ChainElement {}
 }
 
-declare module "@miyauci/estree/es5/internal" {
+declare module "@miyauci/estree/es2019/internal" {
   interface ExpressionMap {
     ChainExpression: ChainExpression;
     ImportExpression: ImportExpression;
