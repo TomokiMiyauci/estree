@@ -1,5 +1,5 @@
 import type { Node } from "./node_object.ts";
-import type { Identifier } from "./identifier.ts";
+import type { Identifier } from "./expression.ts";
 import type { FunctionBody } from "./statement.ts";
 import type { Pattern } from "./pattern.ts";
 

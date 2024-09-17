@@ -7,24 +7,27 @@ import type { Function } from "./function.ts";
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#expressions)
  */
-export type Expression =
-  | ThisExpression
-  | ArrayExpression
-  | ObjectExpression
-  | FunctionExpression
-  | UnaryExpression
-  | UpdateExpression
-  | BinaryExpression
-  | AssignmentExpression
-  | LogicalExpression
-  | MemberExpression
-  | ConditionalExpression
-  | CallExpression
-  | NewExpression
-  | SequenceExpression
-  | Literal
-  | RegExpLiteral
-  | Identifier;
+export type Expression = ExpressionMap[keyof ExpressionMap];
+
+export interface ExpressionMap {
+  ThisExpression: ThisExpression;
+  ArrayExpression: ArrayExpression;
+  ObjectExpression: ObjectExpression;
+  FunctionExpression: FunctionExpression;
+  UnaryExpression: UnaryExpression;
+  UpdateExpression: UpdateExpression;
+  BinaryExpression: BinaryExpression;
+  AssignmentExpression: AssignmentExpression;
+  LogicalExpression: LogicalExpression;
+  MemberExpression: MemberExpression;
+  ConditionalExpression: ConditionalExpression;
+  CallExpression: CallExpression;
+  NewExpression: NewExpression;
+  SequenceExpression: SequenceExpression;
+  Literal: Literal;
+  RegExpLiteral: RegExpLiteral;
+  Identifier: Identifier;
+}
 
 /**
  * A `this` expression.

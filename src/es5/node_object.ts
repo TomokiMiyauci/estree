@@ -1,4 +1,6 @@
 /**
+ * ESTree AST nodes are represented as Node objects.
+ *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#node-objects)
  */
 export interface Node {
