@@ -6,7 +6,7 @@
     "@miyauci/estree/es2019": "./src/es2019/mod.ts",
     "@miyauci/estree/es2020": "./src/es2020/mod.ts",
     "@miyauci/estree/es2021": "./src/es2021/mod.ts",
-    "@miyauci/estree/2022": "./src/es2022/mod.ts",
+    "@miyauci/estree/es2022": "./src/es2022/mod.ts",
     "@miyauci/estree/es2015": "./src/es2015/mod.ts",
     "@miyauci/estree/es2016": "./src/es2016/mod.ts",
     "@miyauci/estree/es5": "./src/es5/mod.ts",
@@ -20,7 +20,8 @@
     "./es2018": "./src/es2018/mod.ts",
     "./es2019": "./src/es2019/mod.ts",
     "./es2020": "./src/es2020/mod.ts",
-    "./es2021": "./src/es2021/mod.ts"
+    "./es2021": "./src/es2021/mod.ts",
+    "./es2022": "./src/es2022/mod.ts"
   },
 
   "lint": {
