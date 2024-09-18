@@ -13,7 +13,7 @@ import type { VariableKindMap } from "./internal.ts";
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#declarations)
  */
-export type Declaration = Statement | FunctionDeclaration | VariableDeclaration;
+export interface Declaration extends Statement {}
 
 /**
  * A function declaration.
@@ -23,7 +23,7 @@ export type Declaration = Statement | FunctionDeclaration | VariableDeclaration;
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#functiondeclaration)
  */
-export interface FunctionDeclaration extends Function {
+export interface FunctionDeclaration extends Function, Declaration {
   type: "FunctionDeclaration";
   id: Identifier;
 }
@@ -33,7 +33,7 @@ export interface FunctionDeclaration extends Function {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#variabledeclaration)
  */
-export interface VariableDeclaration extends Node {
+export interface VariableDeclaration extends Declaration {
   type: "VariableDeclaration";
   declarations: VariableDeclarator[];
   kind: VariableKindMap[keyof VariableKindMap];
@@ -46,6 +46,6 @@ export interface VariableDeclaration extends Node {
  */
 export interface VariableDeclarator extends Node {
   type: "VariableDeclarator";
-  id: Pattern;
-  init: Expression | null;
+  id: Pattern.Kind;
+  init: Expression.Kind | null;
 }

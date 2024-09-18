@@ -10,6 +10,6 @@ import type { Pattern } from "./pattern.ts";
  */
 export interface Function extends Node {
   id: Identifier | null;
-  params: Pattern[];
+  params: Pattern.Kind[];
   body: FunctionBody;
 }

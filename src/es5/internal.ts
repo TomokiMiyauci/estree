@@ -13,7 +13,6 @@ import type {
   NewExpression,
   ObjectExpression,
   Property,
-  RegExpLiteral,
   SequenceExpression,
   ThisExpression,
   UnaryExpression,
@@ -30,7 +29,6 @@ import type {
   ExpressionStatement,
   ForInStatement,
   ForStatement,
-  FunctionBody,
   IfStatement,
   LabeledStatement,
   ReturnStatement,
@@ -62,13 +60,12 @@ export interface ExpressionMap {
   CallExpression: CallExpression;
   NewExpression: NewExpression;
   SequenceExpression: SequenceExpression;
-  Literal: Literal;
-  RegExpLiteral: RegExpLiteral;
+  Literal: Literal.Kind;
   Identifier: Identifier;
 }
 
 export interface BinaryExpressionLeft {
-  Expression: Expression;
+  Expression: Expression.Kind;
 }
 
 export interface LogicalOperatorMap {
@@ -124,19 +121,19 @@ export interface LiteralValueMap {
 }
 
 export interface MemberExpressionObjectMap {
-  Expression: Expression;
+  Expression: Expression.Kind;
 }
 
 export interface MemberExpressionPropertyMap {
-  Expression: Expression;
+  Expression: Expression.Kind;
 }
 
 export interface CallExpressionCalleeMap {
-  Expression: Expression;
+  Expression: Expression.Kind;
 }
 
 export interface CallExpressionArgumentsMap {
-  Expression: Expression;
+  Expression: Expression.Kind;
 }
 
 export interface PatternMap {
@@ -146,14 +143,12 @@ export interface PatternMap {
 
 export interface ProgramBodyMap {
   Directive: Directive;
-  Statement: Statement;
+  Statement: Statement.Kind;
 }
 
 export interface StatementMap {
   ExpressionStatement: ExpressionStatement;
-  Directive: Directive;
   BlockStatement: BlockStatement;
-  FunctionBody: FunctionBody;
   EmptyStatement: EmptyStatement;
   DebuggerStatement: DebuggerStatement;
   ReturnStatement: ReturnStatement;
@@ -172,7 +167,7 @@ export interface StatementMap {
 }
 
 export interface CatchClauseParamMap {
-  Pattern: Pattern;
+  Pattern: Pattern.Kind;
 }
 
 export interface ObjectExpressionPropertiesMap {
@@ -180,15 +175,15 @@ export interface ObjectExpressionPropertiesMap {
 }
 
 export interface PropertyKeyMap {
-  Literal: Literal;
+  Literal: Literal.Kind;
   Identifier: Identifier;
 }
 
 export interface NewExpressionArgumentsMap {
-  Expression: Expression;
+  Expression: Expression.Kind;
 }
 
 export interface ArrayExpressionElementsMap {
-  Expression: Expression;
+  Expression: Expression.Kind;
   null: null;
 }
