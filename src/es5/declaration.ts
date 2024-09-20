@@ -15,6 +15,10 @@ import type { VariableKindMap } from "./internal.ts";
  */
 export interface Declaration extends Statement {}
 
+export namespace Declaration {
+  export type Kind = FunctionDeclaration | VariableDeclaration;
+}
+
 /**
  * A function declaration.
  *
