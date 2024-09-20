@@ -1,35 +1,31 @@
 {
   "name": "@miyauci/estree",
   "imports": {
+    "@miyauci/estree/es5": "./src/es5/mod.ts",
+    "@miyauci/estree/es2015": "./src/es2015/mod.ts",
+    "@miyauci/estree/es2016": "./src/es2016/mod.ts",
     "@miyauci/estree/es2017": "./src/es2017/mod.ts",
     "@miyauci/estree/es2018": "./src/es2018/mod.ts",
     "@miyauci/estree/es2019": "./src/es2019/mod.ts",
     "@miyauci/estree/es2020": "./src/es2020/mod.ts",
     "@miyauci/estree/es2021": "./src/es2021/mod.ts",
     "@miyauci/estree/es2022": "./src/es2022/mod.ts",
-    "@miyauci/estree/es2015": "./src/es2015/mod.ts",
-    "@miyauci/estree/es2016": "./src/es2016/mod.ts",
-    "@miyauci/estree/es5": "./src/es5/mod.ts",
     "@miyauci/estree/es5/internal": "./src/es5/internal.ts",
     "@miyauci/estree/es2015/internal": "./src/es2015/internal.ts",
+    "@miyauci/estree/es2016/internal": "./src/es2016/internal.ts",
+    "@miyauci/estree/es2017/internal": "./src/es2017/internal.ts",
+    "@miyauci/estree/es2018/internal": "./src/es2018/internal.ts",
+    "@miyauci/estree/es2019/internal": "./src/es2019/internal.ts",
     "@miyauci/estree/es2020/internal": "./src/es2020/internal.ts",
-    "@miyauci/infra": "jsr:@miyauci/infra@^1.0.0"
+    "@miyauci/estree/es2021/internal": "./src/es2021/internal.ts"
   },
   "exports": {
-    "./es5": "./src/es5/mod.ts",
-    "./es2015": "./src/es2015/mod.ts",
-    "./es2016": "./src/es2016/mod.ts",
-    "./es2017": "./src/es2017/mod.ts",
-    "./es2018": "./src/es2018/mod.ts",
-    "./es2019": "./src/es2019/mod.ts",
-    "./es2020": "./src/es2020/mod.ts",
-    "./es2021": "./src/es2021/mod.ts",
-    "./es2022": "./src/es2022/mod.ts"
+    "./es5": "./src/es5/mod.ts"
   },
 
   "lint": {
     "rules": {
-      "exclude": ["no-slow-types"]
+      "exclude": ["no-slow-types", "no-namespace"]
     }
   },
 
