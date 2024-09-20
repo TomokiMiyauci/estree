@@ -12,7 +12,6 @@ Provides strict types for ESTree definitions.
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
-  - [Extended Definition](#extended-definition)
 - [API](#api)
 - [Contributing](#contributing)
 - [License](#license)
@@ -63,7 +62,7 @@ import type * as es5 from "@miyauci/estree/es5";
 declare const program: es5.Program;
 ```
 
-### Extended Definition
+<!-- ### Extended Definition
 
 It can be extended with stage3 and experimental definitions.
 
@@ -77,7 +76,7 @@ Or import all stage3 and experimental:
 ```ts
 import "@miyauci/estree/stage3";
 import "@miyauci/estree/experimental";
-```
+``` -->
 
 ## API
 
