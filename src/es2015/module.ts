@@ -14,20 +14,23 @@ import type {
   ModuleSpecifierLocalMap,
 } from "./internal.ts";
 
-/** */
-export type ImportOrExportDeclaration =
-  ImportOrExportDeclarationMap[keyof ImportOrExportDeclarationMap];
+export interface ImportOrExportDeclaration extends Node {}
+
+export namespace ImportOrExportDeclaration {
+  export type Kind =
+    ImportOrExportDeclarationMap[keyof ImportOrExportDeclarationMap];
+}
 
 export interface ModuleSpecifier extends Node {
   local: ModuleSpecifierLocalMap[keyof ModuleSpecifierLocalMap];
 }
 
-export interface ImportDeclaration extends Node {
+export interface ImportDeclaration extends ImportOrExportDeclaration {
   type: "ImportDeclaration";
   specifiers: Array<
     ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier
   >;
-  source: Literal;
+  source: Literal.Kind;
 }
 
 export interface ImportSpecifier extends ModuleSpecifier {
@@ -43,11 +46,11 @@ export interface ImportNamespaceSpecifier extends ModuleSpecifier {
   type: "ImportNamespaceSpecifier";
 }
 
-export interface ExportNamedDeclaration extends Node {
+export interface ExportNamedDeclaration extends ImportOrExportDeclaration {
   type: "ExportNamedDeclaration";
-  declaration: Declaration | null;
+  declaration: Declaration.Kind | null;
   specifiers: Array<ExportSpecifier>;
-  source: Literal | null;
+  source: Literal.Kind | null;
 }
 
 export interface ExportSpecifier extends ModuleSpecifier {
@@ -65,17 +68,17 @@ export interface AnonymousDefaultExportedClassDeclaration extends Class {
   id: null;
 }
 
-export interface ExportDefaultDeclaration extends Node {
+export interface ExportDefaultDeclaration extends ImportOrExportDeclaration {
   type: "ExportDefaultDeclaration";
   declaration:
     | AnonymousDefaultExportedFunctionDeclaration
     | FunctionDeclaration
     | AnonymousDefaultExportedClassDeclaration
     | ClassDeclaration
-    | Expression;
+    | Expression.Kind;
 }
 
-export interface ExportAllDeclaration extends Node {
+export interface ExportAllDeclaration extends ImportOrExportDeclaration {
   type: "ExportAllDeclaration";
-  source: Literal;
+  source: Literal.Kind;
 }

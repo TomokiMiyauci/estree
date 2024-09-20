@@ -12,24 +12,29 @@ export interface Super extends Node {
 
 declare module "@miyauci/estree/es5" {
   interface CallExpression {
-    callee: Expression | Super;
-    arguments: Array<Expression | SpreadElement>;
+    callee: Expression.Kind | Super;
+    arguments: Array<Expression.Kind | SpreadElement>;
   }
 
   interface MemberExpression {
-    object: Expression | Super;
+    object: Expression.Kind | Super;
   }
 
   interface ArrayExpression {
-    elements: Array<Expression | SpreadElement | null>;
+    elements: Array<Expression.Kind | SpreadElement | null>;
   }
 
   interface NewExpression {
-    arguments: Array<Expression | SpreadElement>;
+    arguments: Array<Expression.Kind | SpreadElement>;
   }
 
+  // FIXME: This describes the Esprima and Acorn behaviors, which is not currently aligned with the SpiderMonkey behavior.
+  // interface AssignmentExpression {
+  //   left: Pattern.Kind;
+  // }
+
   interface Property {
-    key: Expression;
+    key: Expression.Kind;
     method: boolean;
     shorthand: boolean;
     computed: boolean;
@@ -52,7 +57,7 @@ declare module "@miyauci/estree/es5/internal" {
 
 export interface SpreadElement extends Node {
   type: "SpreadElement";
-  argument: Expression;
+  argument: Expression.Kind;
 }
 
 declare module "@miyauci/estree/es5/internal" {
@@ -64,11 +69,8 @@ declare module "@miyauci/estree/es5/internal" {
     SpreadElement: SpreadElement;
   }
 
-  // interface AssignmentExpression {
-  // }
-
   interface PropertyKeyMap {
-    Expression: Expression;
+    Expression: Expression.Kind;
   }
 
   interface ExpressionMap {
@@ -77,15 +79,16 @@ declare module "@miyauci/estree/es5/internal" {
   }
 }
 
-export interface ArrowFunctionExpression extends Omit<Function, "body"> {
+export interface ArrowFunctionExpression
+  extends Omit<Function, "body">, Expression {
   type: "ArrowFunctionExpression";
-  body: FunctionBody | Expression;
+  body: FunctionBody | Expression.Kind;
   expression: boolean;
   generator: false;
 }
 
-export interface YieldExpression extends Node {
+export interface YieldExpression extends Expression {
   type: "YieldExpression";
-  argument: Expression | null;
+  argument: Expression.Kind | null;
   delegate: boolean;
 }
