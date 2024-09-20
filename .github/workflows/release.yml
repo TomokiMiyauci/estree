@@ -45,13 +45,13 @@ jobs:
       - name: Test
         run: deno task test --coverage=coverage
 
-      - name: Generate coverage
-        run: deno coverage coverage --output=cov_profile.lcov --lcov
+      # - name: Generate coverage
+      #   run: deno coverage coverage --output=cov_profile.lcov --lcov
 
-      - uses: codecov/codecov-action@v4
-        with:
-          files: cov_profile.lcov
-          token: ${{ secrets.CODECOV_TOKEN }}
+      # - uses: codecov/codecov-action@v4
+      #   with:
+      #     files: cov_profile.lcov
+      #     token: ${{ secrets.CODECOV_TOKEN }}
 
   release:
     needs: [lint, test]
