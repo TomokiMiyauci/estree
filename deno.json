@@ -1,5 +1,9 @@
 {
   "name": "@miyauci/estree",
+  "tasks": {
+    "test": "deno test --doc",
+    "lint": "deno fmt --check && deno lint"
+  },
   "imports": {
     "@miyauci/estree/es5": "./src/es5/mod.ts",
     "@miyauci/estree/es2015": "./src/es2015/mod.ts",
@@ -29,5 +33,6 @@
     }
   },
 
-  "version": "0.1.0-placeholder"
+  "version": "0.1.0-placeholder",
+  "exclude": ["CHANGELOG.md"]
 }
