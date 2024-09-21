@@ -12,35 +12,54 @@ Statements
     }
 
 Statement
-  = InterfaceDefinition / EnumDeclaration
+  = InterfaceDeclaration / EnumDeclaration
 
-InterfaceDefinition
-  = extend:("extend" _)? "interface" _ id:Identifier heritages:(_ @HeritageList)? _ "{" _ properties:FieldList* _ "}" {
+InterfaceDeclaration
+  = extend:("extend" _)? "interface" _ id:Identifier heritage:(_ @InterfaceHeritage)? _ "{" _ body:InterfaceBody? _ "}" {
       return {
-        type: "InterfaceDefinition",
+        type: "InterfaceDeclaration",
         id,
-        properties: properties ?? [],
-        heritages: heritages ?? [],
+        body,
+        heritage,
         extend: !!extend
       };
     }
 
-EnumDeclaration = extend:("extend" _)? "enum" _ id:Identifier _ "{" _ UnionAnnotation  _ "}" {
+InterfaceHeritage = "<:" _ head:Identifier rest:(_ "," _  @Identifier)* {
+  return {
+    type: "InterfaceHeritage",
+    body: [head].concat(rest),
+  }
+}
+
+InterfaceBody = head:Property tail:(_ @Property)* {
+  return {
+    type: "InterfaceBody",
+    properties: [head].concat(tail)
+  }
+}
+
+EnumDeclaration = extend:("extend" _)? "enum" _ id:Identifier _ "{" _ body:EnumBody  _ "}" {
   return {
     type: "EnumDeclaration",
+    id,
+    body,
     extend: !!extend
   }
 }
 
+EnumBody = head:EnumMember tail:(_ "|" _  @EnumMember)* {
+  return {
+    type: "EnumBody",
+    members: [head].concat(tail),
+  }
+}
+
+EnumMember = StringLiteral
 
 HeritageList = "<:" _ head:Identifier rest:(_ "," _ @Identifier)* {
   return [head].concat(rest)
 }
-
-FieldList
-  = head:Property tail:(_ @Property)* {
-      return [head].concat(tail)
-    }
 
 Property
   = key:Identifier _ ":" _ annotation:AnnotationFamily ";" {
@@ -51,7 +70,7 @@ Property
       };
     }
 
-AnnotationFamily = ListAnnotation / UnionAnnotation / Identifier / StringLiteral / TypeLiteral
+AnnotationFamily = ListAnnotation / UnionAnnotation / Identifier / StringLiteral / ObjectLiteral
 
 ListAnnotation = "[" _ value:Possible _ "]" {
   return {
@@ -70,7 +89,7 @@ UnionAnnotation = head:Symbol rest:(_ "|" _ @Symbol)* {
 Symbol = StringLiteral / Identifier
 Possible = UnionAnnotation / Symbol
 
-TypeLiteral = "{" _ properties:FieldList? _ "}" {
+ObjectLiteral = "{" _ properties:InterfaceBody? _ "}" {
   return {
     type: "TypeLiteral"
   }
