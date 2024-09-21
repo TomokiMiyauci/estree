@@ -1,0 +1,182 @@
+Program
+  = body:Statements? {
+      return {
+        type: "Program",
+        body: body ?? []
+      };
+    }
+
+Statements
+  = head:Statement tail:(_ @Statement)* {
+      return [head].concat(tail)
+    }
+
+Statement
+  = InterfaceDefinition / EnumDeclaration
+
+InterfaceDefinition
+  = extend:("extend" _)? "interface" _ id:Identifier heritages:(_ @HeritageList)? _ "{" _ properties:FieldList* _ "}" {
+      return {
+        type: "InterfaceDefinition",
+        id,
+        properties: properties ?? [],
+        heritages: heritages ?? [],
+        extend: !!extend
+      };
+    }
+
+EnumDeclaration = extend:("extend" _)? "enum" _ id:Identifier _ "{" _ UnionAnnotation  _ "}" {
+  return {
+    type: "EnumDeclaration",
+    extend: !!extend
+  }
+}
+
+
+HeritageList = "<:" _ head:Identifier rest:(_ "," _ @Identifier)* {
+  return [head].concat(rest)
+}
+
+FieldList
+  = head:Property tail:(_ @Property)* {
+      return [head].concat(tail)
+    }
+
+Property
+  = key:Identifier _ ":" _ annotation:AnnotationFamily ";" {
+      return {
+        type: "Property",
+        key,
+        annotation
+      };
+    }
+
+AnnotationFamily = ListAnnotation / UnionAnnotation / Identifier / StringLiteral / TypeLiteral
+
+ListAnnotation = "[" _ value:Possible _ "]" {
+  return {
+    type: "ListAnnotation",
+    value
+  }
+}
+
+UnionAnnotation = head:Symbol rest:(_ "|" _ @Symbol)* {
+  return {
+    type: "UnionAnnotation",
+    or: [head].concat(rest)
+  }
+}
+
+Symbol = StringLiteral / Identifier
+Possible = UnionAnnotation / Symbol
+
+TypeLiteral = "{" _ properties:FieldList? _ "}" {
+  return {
+    type: "TypeLiteral"
+  }
+}
+
+Identifier
+  = [a-zA-Z_][a-zA-Z0-9_]* {
+      return {
+        type: "Identifier",
+        name: text(),
+      }
+    }
+
+StringLiteral "string"
+  = '"' chars:DoubleStringCharacter* '"' {
+      return { type: "Literal", value: chars.join("") };
+    }
+
+quotation_mark
+  = '"'
+
+Comment "comment"
+  = SingleLineComment
+
+SourceCharacter
+  = .
+
+DoubleStringCharacter
+  = !('"' / "\\" / LineTerminator) SourceCharacter { return text(); }
+  / "\\" sequence:EscapeSequence { return sequence; }
+  / LineContinuation
+
+EscapeSequence
+  = CharacterEscapeSequence
+  / "0" !DecimalDigit { return "\0"; }
+  / HexEscapeSequence
+  / UnicodeEscapeSequence
+
+CharacterEscapeSequence
+  = SingleEscapeCharacter
+  / NonEscapeCharacter
+
+HexEscapeSequence
+  = "x" digits:$(HexDigit HexDigit) {
+      return String.fromCharCode(parseInt(digits, 16));
+    }
+
+UnicodeEscapeSequence
+  = "u" digits:$(HexDigit HexDigit HexDigit HexDigit) {
+      return String.fromCharCode(parseInt(digits, 16));
+    }
+
+HexDigit
+  = [0-9a-f]i
+
+SingleEscapeCharacter
+  = "'"
+  / '"'
+  / "\\"
+  / "b"  { return "\b"; }
+  / "f"  { return "\f"; }
+  / "n"  { return "\n"; }
+  / "r"  { return "\r"; }
+  / "t"  { return "\t"; }
+  / "v"  { return "\v"; }
+
+LineContinuation
+  = "\\" LineTerminatorSequence { return ""; }
+
+NonEscapeCharacter
+  = !(EscapeCharacter / LineTerminator) SourceCharacter { return text(); }
+
+EscapeCharacter
+  = SingleEscapeCharacter
+  / DecimalDigit
+  / "x"
+  / "u"
+
+DecimalDigit
+  = [0-9]
+
+SingleLineComment
+  = "//" (!LineTerminator SourceCharacter)*
+
+LineTerminator
+  = [\n\r\u2028\u2029]
+
+_
+  = (WhiteSpace / LineTerminatorSequence / Comment)*
+
+WhiteSpace "whitespace"
+  = "\t"
+  / "\v"
+  / "\f"
+  / " "
+  / "\u00A0"
+  / "\uFEFF"
+  / Zs
+
+// Separator, Space
+Zs = [\u0020\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]
+
+LineTerminatorSequence "end of line"
+  = "\n"
+  / "\r\n"
+  / "\r"
+  / "\u2028"
+  / "\u2029"
+
