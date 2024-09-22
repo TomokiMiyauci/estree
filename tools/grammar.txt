@@ -79,19 +79,20 @@ ListAnnotation = "[" _ value:Possible _ "]" {
   }
 }
 
-UnionAnnotation = head:Symbol rest:(_ "|" _ @Symbol)* {
+UnionAnnotation = first:Symbol _ "|" _ second:Symbol rest:(_ "|" _ @Symbol)* {
   return {
     type: "UnionAnnotation",
-    or: [head].concat(rest)
+    or: [first, second].concat(rest)
   }
 }
 
 Symbol = StringLiteral / Identifier
 Possible = UnionAnnotation / Symbol
 
-ObjectLiteral = "{" _ properties:InterfaceBody? _ "}" {
+ObjectLiteral = "{" _ head:Property tail:(_ @Property)* _ "}" {
   return {
-    type: "TypeLiteral"
+    type: "ObjectLiteral",
+    properties: [head].concat(tail)
   }
 }
 
