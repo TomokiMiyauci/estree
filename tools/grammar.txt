@@ -12,7 +12,9 @@ Statements
     }
 
 Statement
-  = InterfaceDeclaration / EnumDeclaration
+  = Declaration
+
+Declaration = InterfaceDeclaration / EnumDeclaration
 
 InterfaceDeclaration
   = extend:("extend" _)? "interface" _ id:Identifier heritage:(_ @InterfaceHeritage)? _ "{" _ body:InterfaceBody? _ "}" {
@@ -22,22 +24,8 @@ InterfaceDeclaration
         body,
         heritage,
         extend: !!extend
-      };
+      }
     }
-
-InterfaceHeritage = "<:" _ head:Identifier rest:(_ "," _  @Identifier)* {
-  return {
-    type: "InterfaceHeritage",
-    body: [head].concat(rest),
-  }
-}
-
-InterfaceBody = head:Property tail:(_ @Property)* {
-  return {
-    type: "InterfaceBody",
-    properties: [head].concat(tail)
-  }
-}
 
 EnumDeclaration = extend:("extend" _)? "enum" _ id:Identifier _ "{" _ body:EnumBody  _ "}" {
   return {
@@ -45,54 +33,6 @@ EnumDeclaration = extend:("extend" _)? "enum" _ id:Identifier _ "{" _ body:EnumB
     id,
     body,
     extend: !!extend
-  }
-}
-
-EnumBody = head:EnumMember tail:(_ "|" _  @EnumMember)* {
-  return {
-    type: "EnumBody",
-    members: [head].concat(tail),
-  }
-}
-
-EnumMember = StringLiteral
-
-HeritageList = "<:" _ head:Identifier rest:(_ "," _ @Identifier)* {
-  return [head].concat(rest)
-}
-
-Property
-  = key:Identifier _ ":" _ annotation:AnnotationFamily ";" {
-      return {
-        type: "Property",
-        key,
-        annotation
-      };
-    }
-
-AnnotationFamily = ListAnnotation / UnionAnnotation / Identifier / StringLiteral / ObjectLiteral
-
-ListAnnotation = "[" _ value:Possible _ "]" {
-  return {
-    type: "ListAnnotation",
-    value
-  }
-}
-
-UnionAnnotation = first:Symbol _ "|" _ second:Symbol rest:(_ "|" _ @Symbol)* {
-  return {
-    type: "UnionAnnotation",
-    or: [first, second].concat(rest)
-  }
-}
-
-Symbol = StringLiteral / Identifier
-Possible = UnionAnnotation / Symbol
-
-ObjectLiteral = "{" _ head:Property tail:(_ @Property)* _ "}" {
-  return {
-    type: "ObjectLiteral",
-    properties: [head].concat(tail)
   }
 }
 
@@ -104,10 +44,109 @@ Identifier
       }
     }
 
+InterfaceBody = head:Property tail:(_ @Property)* {
+  return {
+    type: "InterfaceBody",
+    properties: [head].concat(tail)
+  }
+}
+
+InterfaceHeritage = "<:" _ head:Identifier rest:(_ "," _  @Identifier)* {
+  return {
+    type: "InterfaceHeritage",
+    body: [head].concat(rest),
+  }
+}
+
+EnumBody = head:EnumMember tail:(_ "|" _  @EnumMember)* {
+  return {
+    type: "EnumBody",
+    members: [head].concat(tail),
+  }
+}
+
+Property
+  = key:Identifier _ ":" _ annotation:Annotation _ ";" {
+      return {
+        type: "Property",
+        key,
+        annotation
+      };
+    }
+
+EnumMember = StringLiteral
+
 StringLiteral "string"
   = '"' chars:DoubleStringCharacter* '"' {
-      return { type: "Literal", value: chars.join("") };
+      return { type: "StringLiteral", value: chars.join("") };
     }
+
+Annotation = UnionType/ LiteralType / TypeReference / TupleType / TypeLiteral
+
+UnionType = first:UnionMember _ "|" _ second:UnionMember rest:(_ "|" _ @UnionMember)* {
+  return {
+    type: "UnionType",
+    types: [first, second].concat(rest)
+  }
+}
+
+UnionMember = LiteralType / TypeReference
+
+LiteralType = literal:Literal {
+  return {
+    type: "LiteralType",
+    literal
+  }
+}
+
+TypeReference = name:Identifier {
+  return {
+    type: "TypeReference",
+    name
+  }
+}
+
+TupleType = "[" _ element:(UnionType / TypeReference / LiteralType) _ "]" {
+  return {
+    type: "TupleType",
+    element
+  }
+}
+
+TypeLiteral = "{" _ head:Property tail:(_ @Property)* _ "}" {
+  return {
+    type: "TypeLiteral",
+    members: [head].concat(tail)
+  }
+}
+
+Literal = StringLiteral / Keyword
+
+Keyword = StringKeyword / NullKeyword / NumberKeyword / BooleanKeyword
+
+StringKeyword = "string" {
+  return {
+    type: "StringKeyword"
+  }
+}
+
+NullKeyword = "null" {
+  return {
+    type: "NullKeyword"
+  }
+}
+
+NumberKeyword = "number" {
+  return {
+    type: "NumberKeyword"
+  }
+}
+
+BooleanKeyword = "boolean" {
+  return {
+    type: "BooleanKeyword"
+  }
+}
 
 quotation_mark
   = '"'
@@ -199,4 +238,3 @@ LineTerminatorSequence "end of line"
   / "\r"
   / "\u2028"
   / "\u2029"
-
