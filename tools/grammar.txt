@@ -122,7 +122,7 @@ TypeLiteral = "{" _ head:Property tail:(_ @Property)* _ "}" {
 
 Literal = StringLiteral / Keyword
 
-Keyword = StringKeyword / NullKeyword / NumberKeyword / BooleanKeyword
+Keyword = StringKeyword / NullKeyword / NumberKeyword / BooleanKeyword / BigintKeyword
 
 StringKeyword = "string" {
   return {
@@ -145,6 +145,12 @@ NumberKeyword = "number" {
 BooleanKeyword = "boolean" {
   return {
     type: "BooleanKeyword"
+  }
+}
+
+BigintKeyword = "bigint" {
+  return {
+    type: "BigintKeyword"
   }
 }
 

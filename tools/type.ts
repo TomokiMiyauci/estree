@@ -95,7 +95,8 @@ export type Keyword =
   | StringKeyword
   | NullKeyword
   | NumberKeyword
-  | BooleanKeyword;
+  | BooleanKeyword
+  | BigintKeyword;
 
 export interface StringKeyword {
   type: "StringKeyword";
@@ -111,4 +112,8 @@ export interface NumberKeyword {
 
 export interface BooleanKeyword {
   type: "BooleanKeyword";
+}
+
+export interface BigintKeyword {
+  type: "BigintKeyword";
 }
