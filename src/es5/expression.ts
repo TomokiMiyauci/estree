@@ -1,4 +1,4 @@
-import type { Node } from "./node_object.ts";
+import type { BaseNode } from "./node_object.ts";
 import type { Pattern } from "./pattern.ts";
 import type { Function } from "./function.ts";
 import type {
@@ -23,7 +23,7 @@ import type {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#expressions)
  */
-export interface Expression extends Node {}
+export interface Expression extends BaseNode {}
 
 export namespace Expression {
   export type Kind = ExpressionMap[keyof ExpressionMap];
@@ -66,7 +66,7 @@ export interface ObjectExpression extends Expression {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#property)
  */
-export interface Property extends Node {
+export interface Property extends BaseNode {
   type: "Property";
   key: PropertyKeyMap[keyof PropertyKeyMap];
   value: Expression.Kind;
@@ -228,7 +228,7 @@ export interface CallExpression extends Expression {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#newexpression)
  */
-export interface NewExpression extends Node {
+export interface NewExpression extends BaseNode {
   type: "NewExpression";
   callee: Expression.Kind;
   arguments: Array<NewExpressionArgumentsMap[keyof NewExpressionArgumentsMap]>;

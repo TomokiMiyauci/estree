@@ -1,4 +1,4 @@
-import type { Node } from "./node_object.ts";
+import type { BaseNode } from "./node_object.ts";
 import type { Expression, Identifier, Literal } from "./expression.ts";
 import type { VariableDeclaration } from "./declaration.ts";
 import type { Pattern } from "./pattern.ts";
@@ -9,7 +9,7 @@ import type { StatementMap } from "./internal.ts";
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#statements)
  */
-export interface Statement extends Node {}
+export interface Statement extends BaseNode {}
 
 export namespace Statement {
   export type Kind = StatementMap[keyof StatementMap];
@@ -153,7 +153,7 @@ export interface SwitchStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#switchcase)
  */
-export interface SwitchCase extends Node {
+export interface SwitchCase extends BaseNode {
   type: "SwitchCase";
   test: Expression.Kind | null;
   consequent: Statement.Kind[];
@@ -186,7 +186,7 @@ export interface TryStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#catchclause)
  */
-export interface CatchClause extends Node {
+export interface CatchClause extends BaseNode {
   type: "CatchClause";
   param: Pattern.Kind;
   body: BlockStatement;

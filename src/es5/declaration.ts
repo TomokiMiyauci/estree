@@ -1,4 +1,4 @@
-import type { Node } from "./node_object.ts";
+import type { BaseNode } from "./node_object.ts";
 import type { Statement } from "./statement.ts";
 import type { Expression, Identifier } from "./expression.ts";
 import type { Pattern } from "./pattern.ts";
@@ -48,7 +48,7 @@ export interface VariableDeclaration extends Declaration {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#variabledeclarator)
  */
-export interface VariableDeclarator extends Node {
+export interface VariableDeclarator extends BaseNode {
   type: "VariableDeclarator";
   id: Pattern.Kind;
   init: Expression.Kind | null;

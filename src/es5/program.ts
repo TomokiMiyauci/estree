@@ -1,4 +1,4 @@
-import type { Node } from "./node_object.ts";
+import type { BaseNode } from "./node_object.ts";
 import type { ProgramBodyMap } from "./internal.ts";
 
 /**
@@ -6,7 +6,7 @@ import type { ProgramBodyMap } from "./internal.ts";
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#programs)
  */
-export interface Program extends Node {
+export interface Program extends BaseNode {
   type: "Program";
   body: Array<ProgramBodyMap[keyof ProgramBodyMap]>;
 }
