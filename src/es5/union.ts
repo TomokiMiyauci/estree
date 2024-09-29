@@ -1,6 +1,7 @@
 import type {
   BlockStatement,
   BreakStatement,
+  CatchClause,
   ContinueStatement,
   DebuggerStatement,
   DoWhileStatement,
@@ -19,6 +20,7 @@ import type {
 import type {
   FunctionDeclaration,
   VariableDeclaration,
+  VariableDeclarator,
 } from "./declaration.ts";
 import type {
   ArrayExpression,
@@ -39,8 +41,18 @@ import type {
   UnaryExpression,
   UpdateExpression,
 } from "./expression.ts";
+import type { Program } from "./program.ts";
+import type { Property } from "./expression.ts";
 
-export type Node = Statement | Expression | Pattern | Declaration;
+export type Node =
+  | Program
+  | CatchClause
+  | VariableDeclarator
+  | Property
+  | Statement
+  | Expression
+  | Pattern
+  | Declaration;
 
 /**
  * Any statement.
