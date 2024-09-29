@@ -98,6 +98,7 @@ export type Expression =
   | UnaryExpression
   | UpdateExpression
   | RegExpLiteral
+  | Identifier
   | Literal;
 
 export type Pattern = MemberExpression | Identifier;
