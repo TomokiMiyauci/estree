@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/TomokiMiyauci/estree/compare/1.0.0-beta.2...1.0.0-beta.3) (2024-09-29)
+
+
+### Features
+
+* **es5:** add node member ([29c9d10](https://github.com/TomokiMiyauci/estree/commit/29c9d10ad4e8429bbc2186d405fb8cf60688e94a))
+
 # [1.0.0-beta.2](https://github.com/TomokiMiyauci/estree/compare/1.0.0-beta.1...1.0.0-beta.2) (2024-09-29)
 
 
