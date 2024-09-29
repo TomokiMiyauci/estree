@@ -1,7 +1,7 @@
 import type { BaseNode } from "./node_object.ts";
 import type { Identifier } from "./expression.ts";
 import type { FunctionBody } from "./statement.ts";
-import type { Pattern } from "./pattern.ts";
+import type { Pattern } from "./union.ts";
 
 /**
  * A function declaration or expression.
@@ -10,6 +10,6 @@ import type { Pattern } from "./pattern.ts";
  */
 export interface Function extends BaseNode {
   id: Identifier | null;
-  params: Pattern.Kind[];
+  params: Pattern[];
   body: FunctionBody;
 }

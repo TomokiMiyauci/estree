@@ -1,40 +1,13 @@
 import type { BaseNode } from "./node_object.ts";
-import type { Pattern } from "./pattern.ts";
 import type { Function } from "./function.ts";
-import type {
-  ArrayExpressionElementsMap,
-  AssignmentOperatorMap,
-  BinaryExpressionLeft,
-  BinaryOperatorMap,
-  CallExpressionArgumentsMap,
-  CallExpressionCalleeMap,
-  ExpressionMap,
-  LiteralValueMap,
-  LogicalOperatorMap,
-  MemberExpressionObjectMap,
-  MemberExpressionPropertyMap,
-  NewExpressionArgumentsMap,
-  ObjectExpressionPropertiesMap,
-  PropertyKeyMap,
-} from "./internal.ts";
-
-/**
- * Any expression node. Since the left-hand side of an assignment may be any expression in general, an expression can also be a pattern.
- *
- * [ESTree](https://github.com/estree/estree/blob/master/es5.md#expressions)
- */
-export interface Expression extends BaseNode {}
-
-export namespace Expression {
-  export type Kind = ExpressionMap[keyof ExpressionMap];
-}
+import type { Expression, Pattern } from "./union.ts";
 
 /**
  * A `this` expression.
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#thisexpression)
  */
-export interface ThisExpression extends Expression {
+export interface ThisExpression extends BaseNode {
   type: "ThisExpression";
 }
 
@@ -43,9 +16,9 @@ export interface ThisExpression extends Expression {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#arrayexpression)
  */
-export interface ArrayExpression extends Expression {
+export interface ArrayExpression extends BaseNode {
   type: "ArrayExpression";
-  elements: Array<ArrayExpressionElementsMap[keyof ArrayExpressionElementsMap]>;
+  elements: Array<Expression | null>;
 }
 
 /**
@@ -53,11 +26,9 @@ export interface ArrayExpression extends Expression {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#objectexpression)
  */
-export interface ObjectExpression extends Expression {
+export interface ObjectExpression extends BaseNode {
   type: "ObjectExpression";
-  properties: Array<
-    ObjectExpressionPropertiesMap[keyof ObjectExpressionPropertiesMap]
-  >;
+  properties: Array<Property>;
 }
 
 /**
@@ -68,8 +39,8 @@ export interface ObjectExpression extends Expression {
  */
 export interface Property extends BaseNode {
   type: "Property";
-  key: PropertyKeyMap[keyof PropertyKeyMap];
-  value: Expression.Kind;
+  key: Literal | Identifier;
+  value: Expression;
   kind: "init" | "get" | "set";
 }
 
@@ -78,7 +49,7 @@ export interface Property extends BaseNode {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#functionexpression)
  */
-export interface FunctionExpression extends Function, Expression {
+export interface FunctionExpression extends Function {
   type: "FunctionExpression";
 }
 
@@ -87,11 +58,11 @@ export interface FunctionExpression extends Function, Expression {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#unaryexpression)
  */
-export interface UnaryExpression extends Expression {
+export interface UnaryExpression extends BaseNode {
   type: "UnaryExpression";
   operator: UnaryOperator;
   prefix: boolean;
-  argument: Expression.Kind;
+  argument: Expression;
 }
 
 /**
@@ -113,10 +84,10 @@ export type UnaryOperator =
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#updateexpression)
  */
-export interface UpdateExpression extends Expression {
+export interface UpdateExpression extends BaseNode {
   type: "UpdateExpression";
   operator: UpdateOperator;
-  argument: Expression.Kind;
+  argument: Expression;
   prefix: boolean;
 }
 
@@ -132,11 +103,11 @@ export type UpdateOperator = "++" | "--";
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#binaryexpression)
  */
-export interface BinaryExpression extends Expression {
+export interface BinaryExpression extends BaseNode {
   type: "BinaryExpression";
   operator: BinaryOperator;
-  left: BinaryExpressionLeft[keyof BinaryExpressionLeft];
-  right: Expression.Kind;
+  left: Expression;
+  right: Expression;
 }
 
 /**
@@ -144,18 +115,39 @@ export interface BinaryExpression extends Expression {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#binaryoperator)
  */
-export type BinaryOperator = BinaryOperatorMap[keyof BinaryOperatorMap];
+export type BinaryOperator =
+  | "=="
+  | "!="
+  | "==="
+  | "!=="
+  | "<"
+  | "<="
+  | ">"
+  | ">="
+  | "<<"
+  | ">>"
+  | ">>>"
+  | "+"
+  | "-"
+  | "*"
+  | "/"
+  | "%"
+  | "|"
+  | "^"
+  | "&"
+  | "in"
+  | "instanceof";
 
 /**
  * An assignment operator expression.
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#assignmentexpression)
  */
-export interface AssignmentExpression extends Expression {
+export interface AssignmentExpression extends BaseNode {
   type: "AssignmentExpression";
   operator: AssignmentOperator;
-  left: Pattern.Kind | Expression.Kind;
-  right: Expression.Kind;
+  left: Pattern | Expression;
+  right: Expression;
 }
 
 /**
@@ -164,18 +156,29 @@ export interface AssignmentExpression extends Expression {
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#assignmentoperator)
  */
 export type AssignmentOperator =
-  AssignmentOperatorMap[keyof AssignmentOperatorMap];
+  | "="
+  | "+="
+  | "-="
+  | "*="
+  | "/="
+  | "%="
+  | "<<="
+  | ">>="
+  | ">>>="
+  | "|="
+  | "^="
+  | "&=";
 
 /**
  * A logical operator expression.
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#logicalexpression)
  */
-export interface LogicalExpression extends Expression {
+export interface LogicalExpression extends BaseNode {
   type: "LogicalExpression";
   operator: LogicalOperator;
-  left: Expression.Kind;
-  right: Expression.Kind;
+  left: Expression;
+  right: Expression;
 }
 
 /**
@@ -183,7 +186,7 @@ export interface LogicalExpression extends Expression {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#logicaloperator)
  */
-export type LogicalOperator = LogicalOperatorMap[keyof LogicalOperatorMap];
+export type LogicalOperator = "||" | "&&";
 
 /**
  * A member expression. If {@link computed} is `true`, the node corresponds to a computed (`a[b]`) member expression and {@link property} is an {@link Expression}.
@@ -191,10 +194,10 @@ export type LogicalOperator = LogicalOperatorMap[keyof LogicalOperatorMap];
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#memberexpression)
  */
-export interface MemberExpression extends Expression, Pattern {
+export interface MemberExpression extends BaseNode {
   type: "MemberExpression";
-  object: MemberExpressionObjectMap[keyof MemberExpressionObjectMap];
-  property: MemberExpressionPropertyMap[keyof MemberExpressionPropertyMap];
+  object: Expression;
+  property: Expression;
   computed: boolean;
 }
 
@@ -203,11 +206,11 @@ export interface MemberExpression extends Expression, Pattern {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#conditionalexpression)
  */
-export interface ConditionalExpression extends Expression {
+export interface ConditionalExpression extends BaseNode {
   type: "ConditionalExpression";
-  test: Expression.Kind;
-  alternate: Expression.Kind;
-  consequent: Expression.Kind;
+  test: Expression;
+  alternate: Expression;
+  consequent: Expression;
 }
 
 /**
@@ -215,12 +218,10 @@ export interface ConditionalExpression extends Expression {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#callexpression)
  */
-export interface CallExpression extends Expression {
+export interface CallExpression extends BaseNode {
   type: "CallExpression";
-  callee: CallExpressionCalleeMap[keyof CallExpressionCalleeMap];
-  arguments: Array<
-    CallExpressionArgumentsMap[keyof CallExpressionArgumentsMap]
-  >;
+  callee: Expression;
+  arguments: Array<Expression>;
 }
 
 /**
@@ -230,8 +231,8 @@ export interface CallExpression extends Expression {
  */
 export interface NewExpression extends BaseNode {
   type: "NewExpression";
-  callee: Expression.Kind;
-  arguments: Array<NewExpressionArgumentsMap[keyof NewExpressionArgumentsMap]>;
+  callee: Expression;
+  arguments: Array<Expression>;
 }
 
 /**
@@ -239,9 +240,9 @@ export interface NewExpression extends BaseNode {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#sequenceexpression)
  */
-export interface SequenceExpression extends Expression {
+export interface SequenceExpression extends BaseNode {
   type: "SequenceExpression";
-  expressions: Expression.Kind[];
+  expressions: Array<Expression>;
 }
 
 /**
@@ -252,13 +253,9 @@ export interface SequenceExpression extends Expression {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#literal)
  */
-export interface Literal extends Expression {
+export interface Literal extends BaseNode {
   type: "Literal";
-  value: LiteralValueMap[keyof LiteralValueMap];
-}
-
-export namespace Literal {
-  export type Kind = Literal | RegExpLiteral;
+  value: string | boolean | null | number | RegExp;
 }
 
 /**
@@ -279,7 +276,7 @@ export interface RegExpLiteral extends Literal {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#identifier)
  */
-export interface Identifier extends Expression, Pattern {
+export interface Identifier extends BaseNode {
   type: "Identifier";
   name: string;
 }

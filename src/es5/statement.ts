@@ -1,28 +1,16 @@
 import type { BaseNode } from "./node_object.ts";
-import type { Expression, Identifier, Literal } from "./expression.ts";
+import type { Identifier, Literal } from "./expression.ts";
 import type { VariableDeclaration } from "./declaration.ts";
-import type { Pattern } from "./pattern.ts";
-import type { StatementMap } from "./internal.ts";
-
-/**
- * Any statement.
- *
- * [ESTree](https://github.com/estree/estree/blob/master/es5.md#statements)
- */
-export interface Statement extends BaseNode {}
-
-export namespace Statement {
-  export type Kind = StatementMap[keyof StatementMap];
-}
+import type { Expression, Pattern, Statement } from "./union.ts";
 
 /**
  * An expression statement, i.e., a statement consisting of a single expression.
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#expressionstatement)
  */
-export interface ExpressionStatement extends Statement {
+export interface ExpressionStatement extends BaseNode {
   type: "ExpressionStatement";
-  expression: Expression.Kind;
+  expression: Expression;
 }
 
 /**
@@ -32,7 +20,7 @@ export interface ExpressionStatement extends Statement {
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#directive)
  */
 export interface Directive extends ExpressionStatement {
-  expression: Literal.Kind;
+  expression: Literal;
   directive: string;
 }
 
@@ -41,9 +29,9 @@ export interface Directive extends ExpressionStatement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#blockstatement)
  */
-export interface BlockStatement extends Statement {
+export interface BlockStatement extends BaseNode {
   type: "BlockStatement";
-  body: Statement.Kind[];
+  body: Statement[];
 }
 
 /**
@@ -51,8 +39,8 @@ export interface BlockStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#functionbody)
  */
-export interface FunctionBody extends BlockStatement {
-  body: (Directive | Statement.Kind)[];
+export interface FunctionBody extends Omit<BlockStatement, "body"> {
+  body: (Directive | Statement)[];
 }
 
 /**
@@ -60,7 +48,7 @@ export interface FunctionBody extends BlockStatement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#emptystatement)
  */
-export interface EmptyStatement extends Statement {
+export interface EmptyStatement extends BaseNode {
   type: "EmptyStatement";
 }
 
@@ -69,7 +57,7 @@ export interface EmptyStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#debuggerstatement)
  */
-export interface DebuggerStatement extends Statement {
+export interface DebuggerStatement extends BaseNode {
   type: "DebuggerStatement";
 }
 
@@ -78,10 +66,10 @@ export interface DebuggerStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#withstatement)
  */
-export interface WithStatement extends Statement {
+export interface WithStatement extends BaseNode {
   type: "WithStatement";
-  object: Expression.Kind;
-  body: Statement.Kind;
+  object: Expression;
+  body: Statement;
 }
 
 /**
@@ -89,9 +77,9 @@ export interface WithStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#returnstatement)
  */
-export interface ReturnStatement extends Statement {
+export interface ReturnStatement extends BaseNode {
   type: "ReturnStatement";
-  argument: Expression.Kind | null;
+  argument: Expression | null;
 }
 
 /**
@@ -99,10 +87,10 @@ export interface ReturnStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#labeledstatement)
  */
-export interface LabeledStatement extends Statement {
+export interface LabeledStatement extends BaseNode {
   type: "LabeledStatement";
   label: Identifier;
-  body: Statement.Kind;
+  body: Statement;
 }
 
 /**
@@ -110,7 +98,7 @@ export interface LabeledStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#breakstatement)
  */
-export interface BreakStatement extends Statement {
+export interface BreakStatement extends BaseNode {
   type: "BreakStatement";
   label: Identifier | null;
 }
@@ -120,7 +108,7 @@ export interface BreakStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#continuestatement)
  */
-export interface ContinueStatement extends Statement {
+export interface ContinueStatement extends BaseNode {
   type: "ContinueStatement";
   label: Identifier | null;
 }
@@ -130,11 +118,11 @@ export interface ContinueStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#ifstatement)
  */
-export interface IfStatement extends Statement {
+export interface IfStatement extends BaseNode {
   type: "IfStatement";
-  test: Expression.Kind;
-  consequent: Statement.Kind;
-  alternate: Statement.Kind | null;
+  test: Expression;
+  consequent: Statement;
+  alternate: Statement | null;
 }
 
 /**
@@ -142,9 +130,9 @@ export interface IfStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#switchstatement)
  */
-export interface SwitchStatement extends Statement {
+export interface SwitchStatement extends BaseNode {
   type: "SwitchStatement";
-  discriminant: Expression.Kind;
+  discriminant: Expression;
   cases: SwitchCase[];
 }
 
@@ -155,8 +143,8 @@ export interface SwitchStatement extends Statement {
  */
 export interface SwitchCase extends BaseNode {
   type: "SwitchCase";
-  test: Expression.Kind | null;
-  consequent: Statement.Kind[];
+  test: Expression | null;
+  consequent: Statement[];
 }
 
 /**
@@ -164,9 +152,9 @@ export interface SwitchCase extends BaseNode {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#throwstatement)
  */
-export interface ThrowStatement extends Statement {
+export interface ThrowStatement extends BaseNode {
   type: "ThrowStatement";
-  argument: Expression.Kind;
+  argument: Expression;
 }
 
 /**
@@ -174,7 +162,7 @@ export interface ThrowStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#trystatement)
  */
-export interface TryStatement extends Statement {
+export interface TryStatement extends BaseNode {
   type: "TryStatement";
   block: BlockStatement;
   handler: CatchClause | null;
@@ -188,7 +176,7 @@ export interface TryStatement extends Statement {
  */
 export interface CatchClause extends BaseNode {
   type: "CatchClause";
-  param: Pattern.Kind;
+  param: Pattern;
   body: BlockStatement;
 }
 
@@ -197,10 +185,10 @@ export interface CatchClause extends BaseNode {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#whilestatement)
  */
-export interface WhileStatement extends Statement {
+export interface WhileStatement extends BaseNode {
   type: "WhileStatement";
-  test: Expression.Kind;
-  body: Statement.Kind;
+  test: Expression;
+  body: Statement;
 }
 
 /**
@@ -208,10 +196,10 @@ export interface WhileStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#dowhilestatement)
  */
-export interface DoWhileStatement extends Statement {
+export interface DoWhileStatement extends BaseNode {
   type: "DoWhileStatement";
-  body: Statement.Kind;
-  test: Expression.Kind;
+  body: Statement;
+  test: Expression;
 }
 
 /**
@@ -219,12 +207,12 @@ export interface DoWhileStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#forstatement)
  */
-export interface ForStatement extends Statement {
+export interface ForStatement extends BaseNode {
   type: "ForStatement";
-  init: VariableDeclaration | Expression.Kind | null;
-  test: Expression.Kind | null;
-  update: Expression.Kind | null;
-  body: Statement.Kind;
+  init: VariableDeclaration | Expression | null;
+  test: Expression | null;
+  update: Expression | null;
+  body: Statement;
 }
 
 /**
@@ -232,9 +220,9 @@ export interface ForStatement extends Statement {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#forinstatement)
  */
-export interface ForInStatement extends Statement {
+export interface ForInStatement extends BaseNode {
   type: "ForInStatement";
-  left: VariableDeclaration | Pattern.Kind;
-  right: Expression.Kind;
-  body: Statement.Kind;
+  left: VariableDeclaration | Pattern;
+  right: Expression;
+  body: Statement;
 }

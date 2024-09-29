@@ -1,23 +1,7 @@
 import type { BaseNode } from "./node_object.ts";
-import type { Statement } from "./statement.ts";
-import type { Expression, Identifier } from "./expression.ts";
-import type { Pattern } from "./pattern.ts";
+import type { Identifier } from "./expression.ts";
 import type { Function } from "./function.ts";
-import type { VariableKindMap } from "./internal.ts";
-
-/**
- * Any declaration node.
- *
- * > [!NOTE]
- * > Declarations are considered statements; this is because declarations can appear in any statement context.
- *
- * [ESTree](https://github.com/estree/estree/blob/master/es5.md#declarations)
- */
-export interface Declaration extends Statement {}
-
-export namespace Declaration {
-  export type Kind = FunctionDeclaration | VariableDeclaration;
-}
+import type { Expression, Pattern } from "./union.ts";
 
 /**
  * A function declaration.
@@ -27,7 +11,7 @@ export namespace Declaration {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#functiondeclaration)
  */
-export interface FunctionDeclaration extends Function, Declaration {
+export interface FunctionDeclaration extends Function, BaseNode {
   type: "FunctionDeclaration";
   id: Identifier;
 }
@@ -37,10 +21,10 @@ export interface FunctionDeclaration extends Function, Declaration {
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#variabledeclaration)
  */
-export interface VariableDeclaration extends Declaration {
+export interface VariableDeclaration extends BaseNode {
   type: "VariableDeclaration";
   declarations: VariableDeclarator[];
-  kind: VariableKindMap[keyof VariableKindMap];
+  kind: "var";
 }
 
 /**
@@ -50,6 +34,6 @@ export interface VariableDeclaration extends Declaration {
  */
 export interface VariableDeclarator extends BaseNode {
   type: "VariableDeclarator";
-  id: Pattern.Kind;
-  init: Expression.Kind | null;
+  id: Pattern;
+  init: Expression | null;
 }

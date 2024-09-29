@@ -19,6 +19,12 @@ export interface BaseNode {
 }
 
 /**
+ * @internal
+ */
+export interface BaseFunction extends BaseNode {
+}
+
+/**
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#node-objects)
  */
 export interface SourceLocation {

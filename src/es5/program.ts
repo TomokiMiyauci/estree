@@ -1,5 +1,6 @@
 import type { BaseNode } from "./node_object.ts";
-import type { ProgramBodyMap } from "./internal.ts";
+import type { Directive } from "./statement.ts";
+import type { Statement } from "./union.ts";
 
 /**
  * A complete program source tree.
@@ -8,5 +9,5 @@ import type { ProgramBodyMap } from "./internal.ts";
  */
 export interface Program extends BaseNode {
   type: "Program";
-  body: Array<ProgramBodyMap[keyof ProgramBodyMap]>;
+  body: Array<Directive | Statement>;
 }
