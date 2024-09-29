@@ -1,3 +1,10 @@
+# [1.0.0-beta.5](https://github.com/TomokiMiyauci/estree/compare/1.0.0-beta.4...1.0.0-beta.5) (2024-09-29)
+
+
+### Features
+
+* **es5:** add members to union ([01b7900](https://github.com/TomokiMiyauci/estree/commit/01b7900e77a4b8b5fc2e08c48f8d5e64b508a783))
+
 # [1.0.0-beta.4](https://github.com/TomokiMiyauci/estree/compare/1.0.0-beta.3...1.0.0-beta.4) (2024-09-29)
 
 
