@@ -1,3 +1,11 @@
+# [1.0.0-beta.2](https://github.com/TomokiMiyauci/estree/compare/1.0.0-beta.1...1.0.0-beta.2) (2024-09-29)
+
+
+### Features
+
+* **es5:** add base node interface, remove internal mapped types ([b1e0491](https://github.com/TomokiMiyauci/estree/commit/b1e04916963995ec3a0451a2775cab37722945be))
+* **es5:** rename Node to BaseNode ([1e687af](https://github.com/TomokiMiyauci/estree/commit/1e687afb77cf52bb3f16027dc6fe9768c24df29f))
+
 # 1.0.0-beta.1 (2024-09-20)
 
 
