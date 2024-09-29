@@ -4,8 +4,10 @@ import type {
   CatchClause,
   ContinueStatement,
   DebuggerStatement,
+  Directive,
   DoWhileStatement,
   EmptyStatement,
+  ExpressionStatement,
   ForInStatement,
   ForStatement,
   IfStatement,
@@ -75,7 +77,9 @@ export type Statement =
   | ReturnStatement
   | ThrowStatement
   | TryStatement
-  | LabeledStatement;
+  | LabeledStatement
+  | ExpressionStatement
+  | Directive;
 
 /**
  * Any expression node. Since the left-hand side of an assignment may be any expression in general, an expression can also be a pattern.
@@ -99,7 +103,8 @@ export type Expression =
   | UpdateExpression
   | RegExpLiteral
   | Identifier
-  | Literal;
+  | Literal
+  | Declaration;
 
 export type Pattern = MemberExpression | Identifier;
 
@@ -111,4 +116,4 @@ export type Pattern = MemberExpression | Identifier;
  *
  * [ESTree](https://github.com/estree/estree/blob/master/es5.md#declarations)
  */
-export type Declaration = FunctionDeclaration | VariableDeclaration | Statement;
+export type Declaration = FunctionDeclaration | VariableDeclaration;
