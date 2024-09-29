@@ -1,3 +1,10 @@
+# [1.0.0-beta.4](https://github.com/TomokiMiyauci/estree/compare/1.0.0-beta.3...1.0.0-beta.4) (2024-09-29)
+
+
+### Features
+
+* **es5:** extend expression member ([1d3ef99](https://github.com/TomokiMiyauci/estree/commit/1d3ef99206d23ddd8144f100d10e7d9c1a591433))
+
 # [1.0.0-beta.3](https://github.com/TomokiMiyauci/estree/compare/1.0.0-beta.2...1.0.0-beta.3) (2024-09-29)
 
 
