@@ -1,3 +1,10 @@
+# [1.0.0-beta.6](https://github.com/TomokiMiyauci/estree/compare/1.0.0-beta.5...1.0.0-beta.6) (2024-09-30)
+
+
+### Features
+
+* **union:** add union member to statement, expression ([3eb6735](https://github.com/TomokiMiyauci/estree/commit/3eb67354879c23ac3a259d8447b839252c574139))
+
 # [1.0.0-beta.5](https://github.com/TomokiMiyauci/estree/compare/1.0.0-beta.4...1.0.0-beta.5) (2024-09-29)
 
 
