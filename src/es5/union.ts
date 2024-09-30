@@ -13,6 +13,7 @@ import type {
   IfStatement,
   LabeledStatement,
   ReturnStatement,
+  SwitchCase,
   SwitchStatement,
   ThrowStatement,
   TryStatement,
@@ -50,6 +51,7 @@ export type Node =
   | Program
   | CatchClause
   | VariableDeclarator
+  | SwitchCase
   | Property
   | Statement
   | Expression
@@ -79,7 +81,8 @@ export type Statement =
   | TryStatement
   | LabeledStatement
   | ExpressionStatement
-  | Directive;
+  | Directive
+  | Declaration;
 
 /**
  * Any expression node. Since the left-hand side of an assignment may be any expression in general, an expression can also be a pattern.
